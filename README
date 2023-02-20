@@ -1,0 +1,35 @@
+Serb Radu 334CB Tema1
+
+structura pe care eu o pasez fiecarui thread are un type: 0 pt mapper si 1 pt reducer,
+un id de la 0 la nr_mapper-1 pt mapperi si de la 2 la nr_reducer + 1.
+
+inainte de a porni threadurile, sortez dupa dimensiune
+fisierele pe care trebuie sa le pasez prin argument mapperilor
+si adresez fiecarui mapper fisierele pe care trebuie sa le prelucreze.
+daca fisierele au dimensiune 1 2 3 4 5 6 7 si am 4 mapperi, m1 va primi 1 si 5
+m2 va primi 2 si 6 m3 va primi 3 si 7 si m4 va primi 4.
+astfel mapperii vor avea o munca echilibrata si nu va ajunge un mapper sa lucreze cu acelasi numar de fisiere ca altul, dar cu 
+o dimensiune mult mai mare
+
+inaine de a porni threadurile setez in argumentele pe care le pasez nr de mapperi,
+de reduceri, tipul threadului si id ul respectivului thread.
+
+am un vector de argumente si fiecare thread are argumentul lui (la inceput pasam
+acelasi argument si imi tot dadea seg fault, mi a luat cv sa mi dau seama ce are)
+
+in functia thread, 
+pt mapper
+iterez prin fiecare din fisierele mapperului, si pastrez in vectorul numbers toate nr din fisierul respectiv
+dupa asta, iterez prin fiecare nr si prin fiecare putere posibila (de la 2 la 5 in fct de nr reducerilor)
+si verific pt fiecare numar daca este putere perfecta.
+in caz afirmativ il introduc in vectorul vec la pozitia [f_arg->id][i]
+unde f arg id este nr mapperului si i este puterea a carui patrat perfect este
+
+aceasta cautare o fac folosind cautare binara. ma opresc din a mai calcula puterea unui numar atunci cand aceasta e mai mare decat numarul ce trebuie verificat,
+intrucat exista un overflow si nu mai da ce trb, practic de trunchiaza rezultatul atunci cand devine prea mare
+
+dupa partea de map am o bariera care asteapta toate threadurile mapper sa si faca treaba.
+
+la partea de reduce, in vectorul my list introduc doar valorile unice dupa rezultatul obtinut de mapperi
+si ii afisez dimensiunea in fisierul corespunzator.
+
